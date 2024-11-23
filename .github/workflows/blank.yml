@@ -1,0 +1,74 @@
+#%RAML 1.0
+title: WeatherNotificationAPI
+protocols:
+  - HTTP
+  - HTTPS
+types:
+  weather:
+    type: object
+    properties:
+      cityName:
+        type: string
+        required: true
+        example: "Landon,UK"
+      temperature:
+        type: number
+        required: true
+        maximum: 60
+        example: 45
+      Humidity:
+        type: number
+        required: true
+        maximum: 120
+        example: 65
+      weatherCondition:
+        type: string
+        required: true
+        maxLength: 100
+        example: "sunny"
+/Notification:
+  get:
+    description: Retrive weather information and send Notification to the users
+    queryParameters:
+      city:
+        description: CityName and Country Code separated by comma
+        type: string
+        required: true
+      APIkey:
+        description: API key obtained from openWeatherNotification API
+        type: string
+        required: true
+      units:
+        description: units of temerature
+        type: string
+        enum:
+          - metric
+          - imperial
+        default: metric
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items: weather
+  post:
+    responses:
+      400:
+        body:
+          application/json:
+            type: object
+            example:
+              {
+                "error": "Invalid city"
+              }
+
+
+              
+
+
+
+
+          
+          
+          
+
