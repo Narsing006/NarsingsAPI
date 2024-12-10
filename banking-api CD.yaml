@@ -1,0 +1,24 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main  # Trigger CD pipeline on pushing to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checks out the code from your repository
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3  # Set up SSH keys to access remote server
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Store private key in GitHub Secrets
+
+      - name: Deploy to server
+        run: |
+          echo "Deploying application to the server..."
+          ssh user@yourserver.com 'cd /path/to/your/project && git pull && npm install && npm run build && pm2 restart app'
