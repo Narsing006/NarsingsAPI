@@ -1,0 +1,58 @@
+#%RAML 1.0
+title: banking-api
+
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/f13a5797-2206-4ed8-8cd2-c2bd2b6d6694
+
+/accounts:
+  get:
+    description: "Fetch account details"
+    queryParameters:
+      accountId:
+        description: "The account ID to retrive details for"
+        type: string
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "accountId": "123456789",
+                "balance": 100000,
+                "currency": "INR",
+                "status": "active"
+              }
+      400:
+        description: "Account not found"
+        body:
+          application/json:
+            example:
+              {
+                "error": "Account not found"
+              }
+/transactions:
+  get:
+    description: "Fetech transaction history"
+    queryParameters:
+      accountId:
+        description: "The aacount ID to retrieve transaction history for."
+        type: string
+        required: true
+    responses:
+      200:
+        description: "Successful transaction history retrieval"
+        body:
+          application/json:
+            example:
+              [
+                {
+                  "transactionId": "txn123",
+                  "amount": 500,
+                  "date": "2024-12-01"
+                },
+                {
+                  "transactionId": "txn124",
+                  "amount": 10000,
+                  "date": "2024-12-02"
+                }
+              ]
